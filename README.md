@@ -2,7 +2,7 @@
 
 Official implementation of the paper ['HPGNN - A Hierarchical Graph Neural Network for Semantic Segmentation of Large Scale Outdoor Point Clouds'](https://www.computer.org/csdl/proceedings-article/icpr/2022/09956238/1IHpg8unl4c) (ICPR 2022).
 
-:heavy_exclamation_mark: It is not possible to retrain this model using this repo with later versions of tensorflow due to data loader differences. The inference can be used with provided checkpoints. We're expecting to port the code to a later version of tensorflow. Sorry for any inconvenience caused. :heavy_exclamation_mark:
+:heavy_exclamation_mark: It is not possible to retrain this model using this repo with later versions of tensorflow due to data loader differences. The inference can be used with provided checkpoints. We're expecting to port the code to a later version of tensorflow. Sorry for any inconvenience caused.
 
 ## Requirements:
     - tensorflow-gpu 2.5.0
