@@ -1,0 +1,51 @@
+{
+    "COMMENT": "3 levels l2-1k, l1-10k.WCE loss added to 2.10 -- SGD,L2,100epoch. batchnorm stoppped. Model with 2mini-2large-2mini cylinder, N edges, rst0.25, pi/64",
+    "MODEL_TYPE": "Mini_pointgnn_v12",
+    "GRAPH_FN": "graph_maker_map_cylinder_3levels",
+    "MODEL_NAME": "hpgnn_nuscenes",
+    "REVISION": 4,
+    "NUM_CLASSES": 17,
+    "OPTIMIZER": {
+        "INITIAL_LEARNING_RATE": 1e-1,
+        "DECAY_STEPS": 200000,
+        "DECAY_RATE": 0.01,
+        "LEARNING_RATE": 0.01
+    },
+    "DATASET": {
+        "BATCH_SIZE": 2,
+        "PREFETCH": 10
+    },
+    "FOCAL_LOSS": {
+        "FN": "Focal_loss",
+        "GAMMA": 2.5,
+        "USE_INVALIDS": false,
+        "LAMDA": 0.01,
+        "NUM_CLASSES": 17
+    },
+    "LOSS": {
+        "FN": "WCE_loss",
+        "WEIGHTS": [0.0, 1.8105881, 5.1573342, 2.1587296, 1.2727899, 2.8506168, 3.9110526, 2.5637464, 3.4138568, 2.1246367, 1.5850819, 0.7494614, 1.8488067, 1.0924955, 1.0921368, 0.8655386, 0.9503727],
+        "USE_INVALIDS": false,
+        "LAMDA": 0.01,
+        "NUM_CLASSES": 17
+    },
+    "TRAINING": {
+        "STEPS": 100000,
+        "EPOCHS": 50,
+        "VAL_N_EPOCHS":10,
+        "RECORD_LOGS": true,
+        "LOAD_MODEL": false,
+        "SAVE_WEIGHTS": true,
+        "VERBOSE": false,
+        "WEIGHTS_PATH": "./checkpoints/",
+        "LOGS_PATH": "logs/nuscenes/"
+    },
+    "GRAPH_GEN": {
+        "N_CENTERS": 1000,
+        "ITERATIONS": 1,
+        "L1_RADIUS": 5,
+        "L1_NEIGHBOURS": 256,
+        "LIMIT_NEIGHBOURS": true,
+        "VOXEL_SIZE": 3
+    }
+}
