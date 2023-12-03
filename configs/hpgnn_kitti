@@ -37,7 +37,7 @@
         "LOAD_MODEL": false,
         "SAVE_WEIGHTS": true,
         "VERBOSE": false,
-        "WEIGHTS_PATH": "./checkpoints/kitti",
+        "WEIGHTS_PATH": "./checkpoints",
         "LOGS_PATH": "logs/kitti/"
     },
     "GRAPH_GEN": {

@@ -2,6 +2,7 @@ import os
 import datetime
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
+tf.config.run_functions_eagerly(True)
 import numpy as np
 import argparse
 from tqdm import tqdm
@@ -41,7 +42,7 @@ def forward(inputs):
     return output_features
 
 graph_fn = get_graph_maker(CONFIG["GRAPH_FN"])
-segmenter = get_model(CONFIG["MODEL_TYPE"])()
+segmenter = get_model(CONFIG["MODEL_TYPE"])(CONFIG["NUM_CLASSES"])
 
 inv_label = np.array([1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], dtype=np.uint8)
 

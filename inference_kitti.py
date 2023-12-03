@@ -2,6 +2,7 @@ import os
 import datetime
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
+tf.config.run_functions_eagerly(True)
 import numpy as np
 import argparse
 from tqdm import tqdm
@@ -31,10 +32,6 @@ def read_velo(filename):
     remission = velo[:,3].reshape(-1,1)
     return points, remission
 
-def data_read(velo_names):
-    points, remission = tf.py_function(read_velo, [velo_names], [tf.float32, tf.float32])
-    return (points, remission)
-    
 @tf.function(experimental_relax_shapes=True)
 def forward(inputs):
     output_features = tf.argmax(segmenter(inputs), axis=1)
@@ -42,7 +39,7 @@ def forward(inputs):
 inv_label = np.array([0, 10, 11, 15, 18, 20, 30, 31, 32, 40, 44, 48, 49, 50, 51, 70, 71, 72, 80, 81], dtype=np.uint32)
 
 graph_fn = get_graph_maker(CONFIG["GRAPH_FN"])
-segmenter = get_model(CONFIG["MODEL_TYPE"])()
+segmenter = get_model(CONFIG["MODEL_TYPE"])(CONFIG["NUM_CLASSES"])
 if __name__ == '__main__':
     with open(SPLIT_FILE, 'r') as f:
         file_names = f.read().splitlines()
