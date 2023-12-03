@@ -100,7 +100,7 @@ def train_segmenter(dataset, val_dset,
                     acc.result().numpy()))
 
             if TRAINING_CONFIG["RECORD_LOGS"]:
-                step=epoch*len(velo_names)//BATCH_SIZE+i
+                step=(epoch-1)*len(velo_names)//BATCH_SIZE+i
                 with train_summary_writer.as_default():
                     tf.summary.scalar('Total loss', loss, step=step )
                     tf.summary.scalar('Regularization loss', reg_loss, step=step )
