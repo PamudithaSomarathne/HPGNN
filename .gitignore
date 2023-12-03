@@ -1,2 +1,4 @@
 dataset/sequences
 dataset/nuscenes
+logs/*
+*.pyc
