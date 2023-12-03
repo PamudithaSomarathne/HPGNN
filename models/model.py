@@ -406,7 +406,7 @@ class Mini_pointgnn_v7(tf.keras.Model):
     No l0edges, 3 levels
     1-2-1
     '''
-    def __init__(self, *args, **kwargs):
+    def __init__(self, num_classes, *args, **kwargs):
         super(Mini_pointgnn_v7, self).__init__(*args, **kwargs)
         self.layer1 = gnn.FFN(aggregate_fn=gnn.graph_scatter_sum_fn,
                                 output_fn=gnn.MLP_64_64(),
@@ -422,7 +422,7 @@ class Mini_pointgnn_v7(tf.keras.Model):
                                 edge_feature_fn=gnn.MLP_64_64(),
                                 output_fn=gnn.MLP_64_64()) 
         self.layer7 = gnn.FBN() 
-        self.classifier = gnn.Classifier()
+        self.classifier = gnn.Classifier(num_classes)
 
     def call(self, inputs, training=False):
         remission, points, l1_cluster_centers, l2_cluster_centers, \

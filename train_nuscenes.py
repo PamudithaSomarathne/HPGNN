@@ -8,7 +8,7 @@ import numpy as np
 import argparse
 import json
 
-from models.data_pipeline import dataset_nuscenes
+from models.data_pipeline import dataset_nuscenes as dataset
 from models.model import get_model
 
 from models.mini_graph_gen import get_graph_maker
@@ -18,12 +18,10 @@ parser = argparse.ArgumentParser(description='FEPODLOML Training')
 parser.add_argument('--config', type=str, required=True,
                     help='Path to config file')
 parser.add_argument('--dataset', type=str, required=False,
-                    default='dataset/sequences/',
+                    default='dataset/nuscenes/',
                     help='Dataset directory')
 parser.add_argument('--debug', type=bool, required=False,
                     default=False, help='Need debugging?')
-parser.add_argument('--gpu', type=str, required=False,
-                    default='2', help='0,1,both gpus')
 args = parser.parse_args()
 
 CONFIG_PATH = 'configs/' + args.config
@@ -145,7 +143,7 @@ def train_segmenter(dataset, val_dset,
 
 if __name__ == '__main__':
     # model
-    segmenter = get_model(CONFIG["MODEL_TYPE"])()
+    segmenter = get_model(CONFIG["MODEL_TYPE"])(CONFIG["NUM_CLASSES"])
     graph_fn = get_graph_maker(CONFIG["GRAPH_FN"])
     OPTIMIZER_CONFIG = CONFIG["OPTIMIZER"]
 
@@ -178,14 +176,14 @@ if __name__ == '__main__':
     DATASET_CONFIG = CONFIG["DATASET"]
     # support class for dataset processing
     d_set = dataset(dataset_path=args.dataset,
-                    velo_split = DATASET_CONFIG["VELO"],    
-                    label_split=DATASET_CONFIG["LABEL"],    
+                    velo_split = "splits/nuscenes_velo_train.txt",   
+                    label_split= "splits/nuscenes_labels_train.txt",
                     rotate_aug=True,
                     flip_aug=True,
                     scale_aug = True)
     val_dset = dataset(dataset_path=args.dataset,
-                        velo_split = "splits/ns_val_velo.txt",   
-                        label_split= "splits/ns_val_labels.txt",  
+                        velo_split = "splits/nuscenes_velo_val.txt",   
+                        label_split= "splits/nuscenes_labels_val.txt",  
                     )
     GAMMA = 5e-3
     # dataset preprocessing and loading

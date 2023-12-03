@@ -37,7 +37,7 @@
         "LOAD_MODEL": false,
         "SAVE_WEIGHTS": true,
         "VERBOSE": false,
-        "WEIGHTS_PATH": "./checkpoints/",
+        "WEIGHTS_PATH": "./checkpoints/nuscenes",
         "LOGS_PATH": "logs/nuscenes/"
     },
     "GRAPH_GEN": {

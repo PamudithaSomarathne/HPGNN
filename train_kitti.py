@@ -8,7 +8,7 @@ import numpy as np
 import argparse
 import json
 
-from models.data_pipeline import dataset_kitti
+from models.data_pipeline import dataset_kitti as dataset
 from models.model import get_model
 
 from models.mini_graph_gen import get_graph_maker
@@ -22,8 +22,6 @@ parser.add_argument('--dataset', type=str, required=False,
                     help='Dataset directory')
 parser.add_argument('--debug', type=bool, required=False,
                     default=False, help='Need debugging?')
-parser.add_argument('--gpu', type=str, required=False,
-                    default='2', help='0,1,both gpus')
 args = parser.parse_args()
 
 CONFIG_PATH = 'configs/' + args.config
@@ -145,7 +143,7 @@ def train_segmenter(dataset, val_dset,
 
 if __name__ == '__main__':
     # model
-    segmenter = get_model(CONFIG["MODEL_TYPE"])()
+    segmenter = get_model(CONFIG["MODEL_TYPE"])(CONFIG["NUM_CLASSES"])
     graph_fn = get_graph_maker(CONFIG["GRAPH_FN"])
     OPTIMIZER_CONFIG = CONFIG["OPTIMIZER"]
 
@@ -185,6 +183,7 @@ if __name__ == '__main__':
                         label_split= "splits/kitti_labels_val.txt"
                     )
     GAMMA = 5e-3
+    
     # dataset preprocessing and loading
     AUTOTUNE = tf.data.AUTOTUNE
     BATCH_SIZE = DATASET_CONFIG["BATCH_SIZE"]

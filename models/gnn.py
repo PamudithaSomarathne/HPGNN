@@ -103,10 +103,10 @@ class MLP_64_1(tf.keras.layers.Layer):
         return x_
         
 class Classifier(tf.keras.layers.Layer):
-    def __init__(self, name = 'classifier'):
+    def __init__(self, num_classes, name = 'classifier'):
         super(Classifier, self).__init__(name=name,)
         self.dense1 = tf.keras.layers.Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.L2(l2=0.001))
-        self.dense2 = tf.keras.layers.Dense(17, activation='softmax', kernel_regularizer=tf.keras.regularizers.L2(l2=0.001))
+        self.dense2 = tf.keras.layers.Dense(num_classes, activation='softmax', kernel_regularizer=tf.keras.regularizers.L2(l2=0.001))
     def call(self, x_, training = True):
         x_ = self.dense1(x_)
         x_ = self.dense2(x_)
